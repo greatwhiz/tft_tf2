@@ -1048,7 +1048,7 @@ class TemporalFusionTransformer(object):
       self._attention_components = attention_components
 
       adam = tf.keras.optimizers.Adam(
-          lr=self.learning_rate, clipnorm=self.max_gradient_norm)
+          learning_rate=self.learning_rate, clipnorm=self.max_gradient_norm)
 
       model = tf.keras.Model(inputs=all_inputs, outputs=outputs)
 

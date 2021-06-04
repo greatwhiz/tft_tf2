@@ -45,7 +45,7 @@ import tensorflow.compat.v1 as tf
 ExperimentConfig = expt_settings.configs.ExperimentConfig
 HyperparamOptManager = libs.hyperparam_opt.HyperparamOptManager
 ModelClass = libs.tft_model.TemporalFusionTransformer
-
+tf.compat.v1.experimental.output_all_intermediates(True)
 
 def main(expt_name,
          use_gpu,
