@@ -1,0 +1,174 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 15 files
+Detected 3 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: ./libs/utils.py
+--------------------------------------------------------------------------------
+./libs/utils.py:177:14: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+File: ./libs/tft_model.py
+--------------------------------------------------------------------------------
+./libs/tft_model.py:1350:4: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+File: ./libs/hyperparam_opt.py
+--------------------------------------------------------------------------------
+./libs/hyperparam_opt.py:227:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: '.'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file './script_hyperparam_opt.py'
+ outputting to './script_hyperparam_opt.py'
+--------------------------------------------------------------------------------
+
+61:26: INFO: Renamed 'tf.keras.backend.get_session' to 'tf.compat.v1.keras.backend.get_session'
+96:4: INFO: Renamed 'tf.reset_default_graph' to 'tf.compat.v1.reset_default_graph'
+97:34: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+99:6: INFO: Renamed 'tf.keras.backend.set_session' to 'tf.compat.v1.keras.backend.set_session'
+108:15: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+121:6: INFO: Renamed 'tf.keras.backend.set_session' to 'tf.compat.v1.keras.backend.set_session'
+124:2: INFO: Renamed 'tf.reset_default_graph' to 'tf.compat.v1.reset_default_graph'
+125:32: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+126:4: INFO: Renamed 'tf.keras.backend.set_session' to 'tf.compat.v1.keras.backend.set_session'
+155:4: INFO: Renamed 'tf.keras.backend.set_session' to 'tf.compat.v1.keras.backend.set_session'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './script_train_fixed_params.py'
+ outputting to './script_train_fixed_params.py'
+--------------------------------------------------------------------------------
+
+43:0: INFO: Not upgrading symbols because `tensorflow.compat.v1` was directly imported as `tf`.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './script_download_data.py'
+ outputting to './script_download_data.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './expt_settings/__init__.py'
+ outputting to './expt_settings/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './expt_settings/configs.py'
+ outputting to './expt_settings/configs.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './data_formatters/__init__.py'
+ outputting to './data_formatters/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './data_formatters/traffic.py'
+ outputting to './data_formatters/traffic.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './data_formatters/favorita.py'
+ outputting to './data_formatters/favorita.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './data_formatters/base.py'
+ outputting to './data_formatters/base.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './data_formatters/electricity.py'
+ outputting to './data_formatters/electricity.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './data_formatters/volatility.py'
+ outputting to './data_formatters/volatility.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './libs/__init__.py'
+ outputting to './libs/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './libs/utils.py'
+ outputting to './libs/utils.py'
+--------------------------------------------------------------------------------
+
+89:9: INFO: Added keywords to args of function 'tf.reduce_sum'
+144:16: INFO: Renamed 'tf.ConfigProto' to 'tf.compat.v1.ConfigProto'
+153:16: INFO: Renamed 'tf.ConfigProto' to 'tf.compat.v1.ConfigProto'
+172:12: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+174:15: INFO: Renamed 'tf.get_collection' to 'tf.compat.v1.get_collection'
+174:33: INFO: Renamed 'tf.GraphKeys' to 'tf.compat.v1.GraphKeys'
+175:12: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+177:14: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+200:23: INFO: Renamed 'tf.get_default_graph' to 'tf.compat.v1.get_default_graph'
+204:12: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+206:15: INFO: Renamed 'tf.get_collection' to 'tf.compat.v1.get_collection'
+206:33: INFO: Renamed 'tf.GraphKeys' to 'tf.compat.v1.GraphKeys'
+207:12: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+210:34: INFO: Renamed 'tf.get_default_graph' to 'tf.compat.v1.get_default_graph'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './libs/tft_model.py'
+ outputting to './libs/tft_model.py'
+--------------------------------------------------------------------------------
+
+235:10: INFO: Added keywords to args of function 'tf.shape'
+236:7: INFO: Added keywords to args of function 'tf.shape'
+266:29: INFO: Added keywords to args of function 'tf.shape'
+942:15: INFO: Renamed 'tf.keras.layers.CuDNNLSTM' to 'tf.compat.v1.keras.layers.CuDNNLSTM'
+1039:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+1285:27: INFO: Renamed 'tf.keras.backend.get_session' to 'tf.compat.v1.keras.backend.get_session'
+1350:4: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+1351:8: INFO: Renamed 'tf.keras.backend.get_session' to 'tf.compat.v1.keras.backend.get_session'
+1374:10: INFO: Renamed 'tf.keras.backend.get_session' to 'tf.compat.v1.keras.backend.get_session'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './libs/hyperparam_opt.py'
+ outputting to './libs/hyperparam_opt.py'
+--------------------------------------------------------------------------------
+
+227:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+

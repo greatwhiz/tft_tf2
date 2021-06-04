@@ -86,7 +86,7 @@ def tensorflow_quantile_loss(y, y_pred, quantile):
   q_loss = quantile * tf.maximum(prediction_underflow, 0.) + (
       1. - quantile) * tf.maximum(-prediction_underflow, 0.)
 
-  return tf.reduce_sum(q_loss, axis=-1)
+  return tf.reduce_sum(input_tensor=q_loss, axis=-1)
 
 
 def numpy_normalised_quantile_loss(y, y_pred, quantile):
@@ -141,7 +141,7 @@ def get_default_tensorflow_config(tf_device='gpu', gpu_id=0):
 
   if tf_device == 'cpu':
     os.environ['CUDA_VISIBLE_DEVICES'] = '-1'  # for training on cpu
-    tf_config = tf.ConfigProto(
+    tf_config = tf.compat.v1.ConfigProto(
         log_device_placement=False, device_count={'GPU': 0})
 
   else:
@@ -150,7 +150,7 @@ def get_default_tensorflow_config(tf_device='gpu', gpu_id=0):
 
     print('Selecting GPU ID={}'.format(gpu_id))
 
-    tf_config = tf.ConfigProto(log_device_placement=False)
+    tf_config = tf.compat.v1.ConfigProto(log_device_placement=False)
     tf_config.gpu_options.allow_growth = True
 
   return tf_config
@@ -169,10 +169,10 @@ def save(tf_session, model_folder, cp_name, scope=None):
   """
   # Save model
   if scope is None:
-    saver = tf.train.Saver()
+    saver = tf.compat.v1.train.Saver()
   else:
-    var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=scope)
-    saver = tf.train.Saver(var_list=var_list, max_to_keep=100000)
+    var_list = tf.compat.v1.get_collection(tf.compat.v1.GraphKeys.TRAINABLE_VARIABLES, scope=scope)
+    saver = tf.compat.v1.train.Saver(var_list=var_list, max_to_keep=100000)
 
   save_path = saver.save(tf_session,
                          os.path.join(model_folder, '{0}.ckpt'.format(cp_name)))
@@ -197,17 +197,17 @@ def load(tf_session, model_folder, cp_name, scope=None, verbose=False):
   print_weights_in_checkpoint(model_folder, cp_name)
 
   initial_vars = set(
-      [v.name for v in tf.get_default_graph().as_graph_def().node])
+      [v.name for v in tf.compat.v1.get_default_graph().as_graph_def().node])
 
   # Saver
   if scope is None:
-    saver = tf.train.Saver()
+    saver = tf.compat.v1.train.Saver()
   else:
-    var_list = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=scope)
-    saver = tf.train.Saver(var_list=var_list, max_to_keep=100000)
+    var_list = tf.compat.v1.get_collection(tf.compat.v1.GraphKeys.GLOBAL_VARIABLES, scope=scope)
+    saver = tf.compat.v1.train.Saver(var_list=var_list, max_to_keep=100000)
   # Load
   saver.restore(tf_session, load_path)
-  all_vars = set([v.name for v in tf.get_default_graph().as_graph_def().node])
+  all_vars = set([v.name for v in tf.compat.v1.get_default_graph().as_graph_def().node])
 
   if verbose:
     print('Restored {0}'.format(','.join(initial_vars.difference(all_vars))))
