@@ -31,12 +31,12 @@ import libs.tft_model
 import libs.utils as utils
 import numpy as np
 import pandas as pd
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 ExperimentConfig = expt_settings.configs.ExperimentConfig
 HyperparamOptManager = libs.hyperparam_opt.HyperparamOptManager
 ModelClass = libs.tft_model.TemporalFusionTransformer
-
+tf.experimental.output_all_intermediates(True)
 
 def main(expt_name, use_gpu, restart_opt, model_folder, hyperparam_iterations,
          data_csv_path, data_formatter):
@@ -210,7 +210,7 @@ if __name__ == "__main__":
     root_folder = None if args.output_folder == "." else args.output_folder
 
     return args.expt_name, root_folder, args.use_gpu == "yes", \
-        args.restart_hyperparam_opt
+        args.restart_hyperparam_opt == "yes"
 
   # Load settings for default experiments
   name, folder, use_tensorflow_with_gpu, restart = get_args()
