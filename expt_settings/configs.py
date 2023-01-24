@@ -26,90 +26,83 @@ import data_formatters.electricity
 import data_formatters.favorita
 import data_formatters.traffic
 import data_formatters.volatility
-import data_formatters.future_low
 
 
 class ExperimentConfig(object):
-    """Defines experiment configs and paths to outputs.
+  """Defines experiment configs and paths to outputs.
 
-    Attributes:
-      root_folder: Root folder to contain all experimental outputs.
-      experiment: Name of experiment to run.
-      data_folder: Folder to store data for experiment.
-      model_folder: Folder to store serialised models.
-      results_folder: Folder to store results.
-      data_csv_path: Path to primary data csv file used in experiment.
-      hyperparam_iterations: Default number of random search iterations for
-        experiment.
+  Attributes:
+    root_folder: Root folder to contain all experimental outputs.
+    experiment: Name of experiment to run.
+    data_folder: Folder to store data for experiment.
+    model_folder: Folder to store serialised models.
+    results_folder: Folder to store results.
+    data_csv_path: Path to primary data csv file used in experiment.
+    hyperparam_iterations: Default number of random search iterations for
+      experiment.
+  """
+
+  default_experiments = ['volatility', 'electricity', 'traffic', 'favorita']
+
+  def __init__(self, experiment='volatility', root_folder=None):
+    """Creates configs based on default experiment chosen.
+
+    Args:
+      experiment: Name of experiment.
+      root_folder: Root folder to save all outputs of training.
     """
 
-    default_experiments = ['volatility', 'electricity', 'traffic', 'favorita', 'future_low']
+    if experiment not in self.default_experiments:
+      raise ValueError('Unrecognised experiment={}'.format(experiment))
 
-    def __init__(self, experiment='volatility', root_folder=None):
-        """Creates configs based on default experiment chosen.
+    # Defines all relevant paths
+    if root_folder is None:
+      root_folder = os.path.join(
+          os.path.dirname(os.path.realpath(__file__)), '..', 'outputs')
+      print('Using root folder {}'.format(root_folder))
 
-        Args:
-          experiment: Name of experiment.
-          root_folder: Root folder to save all outputs of training.
-        """
+    self.root_folder = root_folder
+    self.experiment = experiment
+    self.data_folder = os.path.join(root_folder, 'data', experiment)
+    self.model_folder = os.path.join(root_folder, 'saved_models', experiment)
+    self.results_folder = os.path.join(root_folder, 'results', experiment)
 
-        if experiment not in self.default_experiments:
-            raise ValueError('Unrecognised experiment={}'.format(experiment))
+    # Creates folders if they don't exist
+    for relevant_directory in [
+        self.root_folder, self.data_folder, self.model_folder,
+        self.results_folder
+    ]:
+      if not os.path.exists(relevant_directory):
+        os.makedirs(relevant_directory)
 
-        # Defines all relevant paths
-        if root_folder is None:
-            root_folder = os.path.join(
-                os.path.dirname(os.path.realpath(__file__)), '..', 'outputs')
-            print('Using root folder {}'.format(root_folder))
+  @property
+  def data_csv_path(self):
+    csv_map = {
+        'volatility': 'formatted_omi_vol.csv',
+        'electricity': 'hourly_electricity.csv',
+        'traffic': 'hourly_data.csv',
+        'favorita': 'favorita_consolidated.csv'
+    }
 
-        self.root_folder = root_folder
-        self.experiment = experiment
-        self.data_folder = os.path.join(root_folder, 'data', experiment)
-        self.model_folder = os.path.join(root_folder, 'saved_models', experiment)
-        self.results_folder = os.path.join(root_folder, 'results', experiment)
+    return os.path.join(self.data_folder, csv_map[self.experiment])
 
-        # Creates folders if they don't exist
-        for relevant_directory in [
-            self.root_folder, self.data_folder, self.model_folder,
-            self.results_folder
-        ]:
-            if not os.path.exists(relevant_directory):
-                os.makedirs(relevant_directory)
+  @property
+  def hyperparam_iterations(self):
 
-    @property
-    def data_csv_path(self):
-        csv_map = {
-            'volatility': 'formatted_omi_vol.csv',
-            'electricity': 'hourly_electricity.csv',
-            'traffic': 'hourly_data.csv',
-            'favorita': 'favorita_consolidated.csv',
-            'future_low': 'LSTM2048_Future_Prediction_15mins_future_20110101_20210501.csv'
-        }
+    return 240 if self.experiment == 'volatility' else 60
 
-        return os.path.join(self.data_folder, csv_map[self.experiment])
+  def make_data_formatter(self):
+    """Gets a data formatter object for experiment.
 
-    @property
-    def hyperparam_iterations(self):
-        my_search_iterations = 1000
+    Returns:
+      Default DataFormatter per experiment.
+    """
 
-        if self.experiment == 'future_low':
-            return my_search_iterations
-        else:
-            return 240 if self.experiment == 'volatility' else 60
+    data_formatter_class = {
+        'volatility': data_formatters.volatility.VolatilityFormatter,
+        'electricity': data_formatters.electricity.ElectricityFormatter,
+        'traffic': data_formatters.traffic.TrafficFormatter,
+        'favorita': data_formatters.favorita.FavoritaFormatter
+    }
 
-    def make_data_formatter(self):
-        """Gets a data formatter object for experiment.
-
-        Returns:
-          Default DataFormatter per experiment.
-        """
-
-        data_formatter_class = {
-            'volatility': data_formatters.volatility.VolatilityFormatter,
-            'electricity': data_formatters.electricity.ElectricityFormatter,
-            'traffic': data_formatters.traffic.TrafficFormatter,
-            'favorita': data_formatters.favorita.FavoritaFormatter,
-            'future_low': data_formatters.future_low.FutureLowFormatter
-        }
-
-        return data_formatter_class[self.experiment]()
+    return data_formatter_class[self.experiment]()
