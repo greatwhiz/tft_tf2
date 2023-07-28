@@ -26,7 +26,7 @@ Scripts are all saved in the main folder, with descriptions below:
 * **script\_train\_fixed\_params.py**: Calibrates the TFT using a predefined set of hyperparameters, and evaluates for a given experiment.
 * **script\_hyperparameter\_optimisation.py**: Runs full hyperparameter optimization using the default random search ranges defined for the TFT.
 
-## Running Default Experiements
+## Running Default Experiments
 Our four default experiments are divided into ``volatility``, ``electricity``, ``traffic``, and``favorita``. To run these experiments, first download the data, and then run the relevant training routine.
 
 ### Step 1: Download data for default experiments
